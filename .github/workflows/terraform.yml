@@ -23,6 +23,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
+    - name: Configure Terraform Backend
+      run: |
+        terraform init -backend-config="bucket=your-terraform-state-bucket" \
+                       -backend-config="key=path/to/terraform.tfstate" \
+                       -backend-config="region=us-east-1" \
+                       -backend-config="dynamodb_table=terraform-state-lock-table"
+
     - name: Terraform fmt
       id: fmt
       run: terraform fmt -check

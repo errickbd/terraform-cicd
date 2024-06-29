@@ -89,4 +89,14 @@ output "instance_id" {
 output "instance_public_dns" {
   description = "Instance public dns"
   value = aws_instance.appserver.public_dns
+
+
+terraform {
+  backend "s3" {
+    bucket         = "devops-secrets-assignment"
+    key            = "path/to/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-state-lock-table"  # Optional: If you want to enable state locking
+  }
+}
 }
